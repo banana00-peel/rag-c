@@ -17,6 +17,7 @@ class GenerationOutputError(RuntimeError):
     """生成模型未遵守结构化输出协议。"""
 
 
+# 接口，流程图依赖，不强制使用模型实现类，可替换其他模型实现类
 class AnswerGenerator(Protocol):
     def generate(
         self,
@@ -25,6 +26,7 @@ class AnswerGenerator(Protocol):
     ) -> GenerationResult: ...
 
 
+# 实现类，Deepseek的具体实现
 class DeepSeekStructuredGenerator:
     """通过 JSON mode 获取结果，再由 Pydantic 严格校验业务协议。"""
 

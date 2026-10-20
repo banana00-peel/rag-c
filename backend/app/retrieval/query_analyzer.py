@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from app.ingestion.catalog import MODEL_CATALOG, detect_model, normalize_model
 
 
+# 将用户的查询处理成这种数据对象
 @dataclass(frozen=True)
 class QueryPlan:
     original: str
@@ -13,6 +14,7 @@ class QueryPlan:
     variants: tuple[str, ...]
 
 
+# 关键词规则表
 class QueryAnalyzer:
     _intent_patterns = (
         ("配网与 App", ("联网", "配网", "Wi-Fi", "wifi", "APP", "app", "网络")),
@@ -35,7 +37,7 @@ class QueryAnalyzer:
             if any(keyword.lower() in normalized.lower() for keyword in keywords):
                 intent = candidate
                 break
-
+        # 删除查询文本里的型号
         retrieval_query = self._remove_model_alias(normalized, detected_model)
         variants = [retrieval_query or normalized]
 

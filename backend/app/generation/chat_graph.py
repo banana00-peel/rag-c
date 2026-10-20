@@ -89,6 +89,8 @@ class ChatGraphService:
         workflow.add_edge("refuse", END)
         return workflow.compile()
 
+
+# --------------环节函数--------------------
     def _analyze(self, state: ChatState) -> dict:
         plan = self._analyzer.analyze(state["question"], state.get("explicit_model"))
         return {"plan": plan}

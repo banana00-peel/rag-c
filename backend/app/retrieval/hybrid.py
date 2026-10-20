@@ -13,9 +13,11 @@ class HybridRetriever:
         self._chroma = chroma
         self._bm25 = bm25
 
+    # 流程实际调用
     def retrieve(self, plan: QueryPlan) -> list[RetrievedChunk]:
         return list(self.retrieve_with_trace(plan).fused_hits)
 
+    # 分离
     def retrieve_with_trace(self, plan: QueryPlan) -> RetrievalTrace:
         """执行一次真实检索，并保留各通道排名供离线评测使用。"""
         dense_by_id: dict[str, dict] = {}
